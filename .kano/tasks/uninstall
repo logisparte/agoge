@@ -1,0 +1,19 @@
+#!/bin/sh
+
+. "$KANO_HELPERS/report"
+
+uninstall_help() {
+  echo "Uninstall git hooks"
+}
+
+uninstall() {
+  _uninstall_git_hooks
+  report success "[uninstall] Successfully uninstalled git hooks"
+}
+
+_uninstall_git_hooks() {
+  report info "[uninstall] Uninstalling git hooks"
+  if git config --local --get core.hooksPath > /dev/null; then
+    git config --local --unset core.hooksPath
+  fi
+}

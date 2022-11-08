@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+kano dockered pre_commit
