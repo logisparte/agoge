@@ -1,0 +1,14 @@
+{
+  "name": "agoge",
+  "type": "module",
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "markdownlint-cli": "^0.40.0",
+    "prettier": "^3.2.5"
+  },
+  "scripts": {
+    "format": "prettier --ignore-unknown --write .",
+    "lint": "markdownlint --ignore-path .gitignore .",
+    "postinstall": "$CI || git config --local core.hooksPath ./hooks"
+  }
+}

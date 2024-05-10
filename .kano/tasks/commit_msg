@@ -1,9 +1,0 @@
-#!/bin/sh
-
-commit_msg_help() {
-  echo "Lint submitted commit message"
-}
-
-commit_msg() {
-  npm exec -- commitlint --edit "$1"
-}

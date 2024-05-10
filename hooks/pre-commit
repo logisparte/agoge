@@ -1,0 +1,25 @@
+#!/bin/sh -e
+
+# Select staged files
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+if [ -z "$FILES" ]; then
+  exit 0
+fi
+
+# Format
+PRETTIER_FILES="$(
+  echo "$FILES" \
+    | grep -e "\.js$" -e "\.json$" -e "\.md$" -e "\.yml$" -e "\.yaml$" || true
+)"
+if [ -n "$PRETTIER_FILES" ]; then
+  echo "Formatting committed javascript, json, markdown and yaml files"
+  echo "$PRETTIER_FILES" | xargs npm exec -- prettier --write
+  echo "$PRETTIER_FILES" | xargs git add
+fi
+
+# Lint
+MARKDOWN_FILES="$(echo "$FILES" | grep -e "\.md$" || true)"
+if [ -n "$MARKDOWN_FILES" ]; then
+  echo "Linting committed markdown files"
+  echo "$MARKDOWN_FILES" | xargs npm exec -- markdownlint
+fi
